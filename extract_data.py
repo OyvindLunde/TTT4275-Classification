@@ -7,7 +7,7 @@ from sklearn.linear_model import SGDClassifier
 
 def extract_data():
     data = pd.read_csv("iris.data", sep=",")
-    print(data.head())
+    #print(data.head())
     le = preprocessing.LabelEncoder()
     x1 = list(data["sepal_length"])
     x2 = list(data["sepal_width"])

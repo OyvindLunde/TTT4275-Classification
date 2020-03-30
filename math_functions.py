@@ -19,12 +19,17 @@ def calculate_MSE(W, t, x):
 #print(calculate_MSE(test, test2, x))
 
 def calculate_g(W,x):
+    print(len(W))
+    print(len(W[0]))
     z = np.dot(W,x)
+    #print(len(z[0]))
+    #print(z)
     g = np.zeros((len(z),len(z[0])))
+    #print(g)
     for i in range(len(z)):
         for k in range(len(z[0])):
             g[i][k] = 1/(1+math.exp(-z[i][k]))
-
+    #print(g)
     return g
 
 #print(calculate_g(test,x))
@@ -40,8 +45,11 @@ def calculate_MSE_gradient(W, t, x):
 #print(calculate_MSE_gradient(test, test2, x))
 
 def calculate_W(iterations, alpha, t, x):
+    print(len(x))
+    print(len(x[0]))
     W = np.zeros((len(t),len(x)))
     #W = np.ones((len(t),len(x)))
+    #print(x)
     for i in range(iterations):
         W = W - alpha*calculate_MSE_gradient(W,t,x)
 
