@@ -7,6 +7,7 @@ from sklearn.linear_model import SGDClassifier
 
 def extract_data():
     data = pd.read_csv("iris.data", sep=",")
+    print(data.head())
     le = preprocessing.LabelEncoder()
     x1 = list(data["sepal_length"])
     x2 = list(data["sepal_width"])
@@ -37,12 +38,4 @@ def confusion_matrix(prediction, actual, numClasses):
         confusionMatrix[actual[i]][prediction[i]] += 1
     return confusionMatrix
 
-def main():
-    x_train, x_test, y_train, y_test = get_sets()
-    clf = linear_model.SGDClassifier(max_iter=1000, tol=1e-3, alpha=0.00001)
-    clf.fit(x_train, y_train)
-    pred = clf.predict(x_test)
-    actual = y_test
-    print(confusion_matrix(pred,actual,3))
 
-main()

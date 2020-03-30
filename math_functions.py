@@ -42,8 +42,8 @@ def calculate_MSE_gradient(W, t, x):
 #print(calculate_MSE_gradient(test, test2, x))
 
 def calculate_W(iterations, alpha, t, x):
-    #W = np.zeros((3,5))
     W = np.zeros((len(t),len(x)))
+    #W = np.ones((len(t),len(x)))
     for i in range(iterations):
         W = W - alpha*calculate_MSE_gradient(W,t,x)
 
