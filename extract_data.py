@@ -7,20 +7,12 @@ from sklearn.linear_model import SGDClassifier
 
 def extract_data():
     data = pd.read_csv("iris.data", sep=",")
-    #print(data.head())
     le = preprocessing.LabelEncoder()
     x1 = list(data["sepal_length"])
     x2 = list(data["sepal_width"])
     x3 = list(data["petal_length"])
     x4 = list(data["petal_width"])
     y = list(le.fit_transform(list(data["class"])))
-    x = np.zeros((4, len(x1)))
-
-    for i in range(len(x1)):
-        x[0] = x1[i]
-        x[1] = x2[i]
-        x[2] = x3[i]
-        x[3] = x4[i]
 
     return list(zip(x1,x2,x3,x4)), y
 
@@ -38,14 +30,17 @@ def get_sets():
     y_train = clc1_y_train + clc2_y_train + clc3_y_train
     y_test = clc1_y_test + clc2_y_test + clc3_y_test
 
-    t = np.zeros((3, len(y_train)))
-
+    t_train = np.zeros((3, len(y_train)))
+    t_test = np.zeros((3, len(y_test)))
     for i in range(len(y_train)):
-        t[y_train[i]][i] = 1
+        t_train[y_train[i]][i] = 1
+
+    for i in range(len(y_test)):
+        t_test[y_test[i]][i] = 1
 
     x_train, x_test, y_train, y_test = reshape_data(x_train, x_test, y_train, y_test)
 
-    return  x_train, x_test, y_train, y_test, t
+    return  x_train, x_test, y_train, y_test, t_train, t_test
 
 
 def reshape_data(x_train, x_test, y_train, y_test):
@@ -70,12 +65,40 @@ def reshape_data(x_train, x_test, y_train, y_test):
 def confusion_matrix(prediction, actual, numClasses):
     confusionMatrix = np.zeros((numClasses,numClasses))
     for i in range(len(prediction)):
-        confusionMatrix[actual[i]][prediction[i]] += 1
+        confusionMatrix[int(actual[i])][int(prediction[i])] += 1
     return confusionMatrix
 
+
+def find_smallest_and_biggest_value(x):
+    min = np.inf
+    max = -np.inf
+    for i in x:
+        if i < min:
+            min = i
+        if i > max:
+            max = i
+    return min, max
+
 def main():
-    x_train, x_test, y_train, y_test, t = get_sets()
+    x, y = extract_data()
+    x1 = np.zeros((len(x), 1))
+    x2 = np.zeros((len(x), 1))
+    x3 = np.zeros((len(x), 1))
+    x4 = np.zeros((len(x), 1))
+    print(x[0][0])
+    for i in range(len(x)):
+        x1[i] = x[i][0]
+        x2[i] = x[i][1]
+        x3[i] = x[i][2]
+        x4[i] = x[i][3]
 
-
+    min_x1, max_x1 = find_smallest_and_biggest_value(x1)
+    min_x2, max_x2 = find_smallest_and_biggest_value(x2)
+    min_x3, max_x3 = find_smallest_and_biggest_value(x3)
+    min_x4, max_x4 = find_smallest_and_biggest_value(x4)
+    print("Min: ", min_x1, " Max: ", max_x1)
+    print("Min: ", min_x2, " Max: ", max_x2)
+    print("Min: ", min_x3, " Max: ", max_x3)
+    print("Min: ", min_x4, " Max: ", max_x4)
 
 main()
