@@ -7,20 +7,12 @@ from sklearn.linear_model import SGDClassifier
 
 def extract_data():
     data = pd.read_csv("iris.data", sep=",")
-    print(data.head())
     le = preprocessing.LabelEncoder()
     x1 = list(data["sepal_length"])
     x2 = list(data["sepal_width"])
     x3 = list(data["petal_length"])
     x4 = list(data["petal_width"])
     y = list(le.fit_transform(list(data["class"])))
-    x = np.zeros((4, len(x1)))
-
-    for i in range(len(x1)):
-        x[0] = x1[i]
-        x[1] = x2[i]
-        x[2] = x3[i]
-        x[3] = x4[i]
 
     return list(zip(x1,x2,x3,x4)), y
 
@@ -75,7 +67,9 @@ def confusion_matrix(prediction, actual, numClasses):
 
 def main():
     x_train, x_test, y_train, y_test, t = get_sets()
-
-
+    x = np.transpose(x_train)
+    print(type(x_train[:,1]))
+    print(x_train[:,1])
+    print(x[:,1])
 
 main()
