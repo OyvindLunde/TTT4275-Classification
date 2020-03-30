@@ -14,7 +14,15 @@ def extract_data():
     x3 = list(data["petal_length"])
     x4 = list(data["petal_width"])
     y = list(le.fit_transform(list(data["class"])))
-    return list(zip(x1, x2, x3, x4)), y
+    x = np.zeros((4, len(x1)))
+
+    for i in range(len(x1)):
+        x[0] = x1[i]
+        x[1] = x2[i]
+        x[2] = x3[i]
+        x[3] = x4[i]
+
+    return list(zip(x1,x2,x3,x4)), y
 
 
 def get_sets():
@@ -35,7 +43,28 @@ def get_sets():
     for i in range(len(y_train)):
         t[y_train[i]][i] = 1
 
-    return  x_train, x_test, t, y_test
+    x_train, x_test, y_train, y_test = reshape_data(x_train, x_test, y_train, y_test)
+
+    return  x_train, x_test, y_train, y_test, t
+
+
+def reshape_data(x_train, x_test, y_train, y_test):
+    x_train_new = np.zeros((len(x_train[0]), len(x_train)))
+    x_test_new = np.zeros((len(x_test[0]), len(x_test)))
+    y_train_new = np.zeros((len(y_train), 1))
+    y_test_new = np.zeros((len(y_test), 1))
+
+    for i in range(len(x_train)):
+        y_train_new[i] = y_train[i]
+        for j in range(len(x_train[0])):
+            x_train_new[j][i] = x_train[i][j]
+
+    for i in range(len(x_test)):
+        y_test_new[i] = y_test[i]
+        for j in range(len(x_test[0])):
+            x_test_new[j][i] = x_test[i][j]
+
+    return x_train_new, x_test_new, y_train_new, y_test_new
 
 
 def confusion_matrix(prediction, actual, numClasses):
@@ -45,6 +74,8 @@ def confusion_matrix(prediction, actual, numClasses):
     return confusionMatrix
 
 def main():
-    x_train, x_test, y_train, y_test = get_sets()
+    x_train, x_test, y_train, y_test, t = get_sets()
+
+
 
 main()
