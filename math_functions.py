@@ -25,12 +25,6 @@ def matrixMul(x,y):
 
 def calculate_MSE_gradient(W, t, x):
     g = calculate_g(W,x)
-    """sum = np.zeros((3,4))
-    for i in range(len(g[0])):
-        diff = g[:,i]-t[:,i]
-        scalar_prod = np.dot(g[:,i],(1-g[:,i]))
-        sum += matrixMul(np.dot(diff,scalar_prod), x[:,i])
-    return sum"""
     mse_grad = g.T-t.T
     g_grad = g.T * (1-g.T) # Element wise
     W_grad = x
@@ -48,9 +42,5 @@ def predict(x, W, t):
     predictions = np.zeros((len(x[0]), 1))
     g = calculate_g(W, x)
     for i in range(len(g[0])):
-        print(g[:,i])
-        print("Actual values ",t[:,i])
-
-    for i in range(len(g)):
         predictions[i] = np.argmax(g[:,i], axis=0)
     return predictions
