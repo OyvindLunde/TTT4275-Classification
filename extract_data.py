@@ -29,7 +29,13 @@ def get_sets():
     x_test = clc1_x_test + clc2_x_test + clc3_x_test
     y_train = clc1_y_train + clc2_y_train + clc3_y_train
     y_test = clc1_y_test + clc2_y_test + clc3_y_test
-    return  x_train, x_test, y_train, y_test
+
+    t = np.zeros((3, len(y_train)))
+
+    for i in range(len(y_train)):
+        t[y_train[i]][i] = 1
+
+    return  x_train, x_test, t, y_test
 
 
 def confusion_matrix(prediction, actual, numClasses):
@@ -38,4 +44,7 @@ def confusion_matrix(prediction, actual, numClasses):
         confusionMatrix[actual[i]][prediction[i]] += 1
     return confusionMatrix
 
+def main():
+    x_train, x_test, y_train, y_test = get_sets()
 
+main()
