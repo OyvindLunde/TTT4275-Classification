@@ -31,13 +31,11 @@ def calculate_g(W,x):
 
 def calculate_MSE_gradient(W, t, x):
     g = calculate_g(W,x)
-    ones = [1] * len(x[0])
-    sum = 0
-    for i in range(len(g)):
-        diff = np.subtract(g[i],t[i])
-        scalar_prod = g[i].dot(np.subtract(ones,g[i]))
-        sum += diff.dot(scalar_prod).dot(np.transpose(x[i]))
-    return sum
+    MSE_gradient = g-t
+    g_gradient = g*(1-g)
+    z_gradient = x.T
+
+    return np.dot(MSE_gradient,g_gradient*z_gradient)
 
 #print(calculate_MSE_gradient(test, test2, x))
 
