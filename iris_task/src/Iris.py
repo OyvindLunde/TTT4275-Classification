@@ -1,6 +1,5 @@
-import extract_data as ed
-import math_functions as mf
-import plotting as plot
+from iris_task.src import extract_data as ed, math_functions as mf
+
 
 def find_total_errors(conf):
     sum = 0

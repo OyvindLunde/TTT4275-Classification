@@ -6,7 +6,7 @@ from sklearn.linear_model import SGDClassifier
 
 
 def extract_data():
-    data = pd.read_csv("iris.data", sep=",")
+    data = pd.read_csv("../iris_data/iris.data", sep=",")
     le = preprocessing.LabelEncoder()
     x1 = list(data["sepal_length"])
     x2 = list(data["sepal_width"])
@@ -20,11 +20,11 @@ def extract_data():
 def get_sets():
     x, y = extract_data()
     clc1_x_train, clc1_x_test, clc1_y_train, clc1_y_test = sklearn.model_selection.train_test_split(x[0:50], y[0:50],
-                                                                                                    test_size=0.4)
+                                                                                                    test_size=0.4, random_state=0)
     clc2_x_train, clc2_x_test, clc2_y_train, clc2_y_test = sklearn.model_selection.train_test_split(x[50:100], y[50:100],
-                                                                                                    test_size=0.4)
+                                                                                                    test_size=0.4, random_state=0)
     clc3_x_train, clc3_x_test, clc3_y_train, clc3_y_test = sklearn.model_selection.train_test_split(x[100:150], y[100:150],
-                                                                                                    test_size=0.4)
+                                                                                                    test_size=0.4, random_state=0)
     x_train = clc1_x_train + clc2_x_train + clc3_x_train
     x_test = clc1_x_test + clc2_x_test + clc3_x_test
     y_train = clc1_y_train + clc2_y_train + clc3_y_train
