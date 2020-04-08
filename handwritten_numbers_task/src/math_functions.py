@@ -15,25 +15,24 @@ def find_distance(m1, m2):
     return dist
 
 
-def find_k_nearest_neighbours(test_matrix, test_set, k):
-    list = np.zeros((k,2))
+def find_k_nearest_neighbours(test_matrix, train_set, k):
+    list = np.zeros((k,2), dtype=int)
     for i in range(k):
-        list[i] = [i, find_distance(test_matrix, test_set[i])]
+        list[i] = [i, find_distance(test_matrix, train_set[i])]
     list = list[np.argsort(list[:, 1])]
 
-    #print(list)
-    for i in range(k, len(test_set)):
-        dist = find_distance(test_matrix, test_set[i])
+    for i in range(k, len(train_set)):
+        dist = find_distance(test_matrix, train_set[i])
         if dist < list[k-1][1]:
             list[k-1] = [i,dist]
             list = list[np.argsort(list[:, 1])]
 
     return list[:,0]
 
-def predict_label(nearest_neighbours):
-    list = np.zeros(10,1)
+def predict_label(nearest_neighbours, train_labels):
+    list = np.zeros((10,1))
     for i in range(len(nearest_neighbours)):
-        list[nearest_neighbours[i]] += 1
+        list[train_labels[nearest_neighbours[i]]] += 1
     return np.argmax(list)
 
 def confusion_matrix(prediction, actual, numClasses):
