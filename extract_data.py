@@ -14,7 +14,7 @@ def extract_data():
     x4 = list(data["petal_width"])
     y = list(le.fit_transform(list(data["class"])))
 
-    return list(zip(x1,x2,x3,x4)), y
+    return list(zip(x1,x4)), y
 
 
 def get_sets():
@@ -79,26 +79,24 @@ def find_smallest_and_biggest_value(x):
             max = i
     return min, max
 
-def main():
+def histogram_bounds():
     x, y = extract_data()
     x1 = np.zeros((len(x), 1))
     x2 = np.zeros((len(x), 1))
     x3 = np.zeros((len(x), 1))
     x4 = np.zeros((len(x), 1))
-    print(x[0][0])
     for i in range(len(x)):
         x1[i] = x[i][0]
-        x2[i] = x[i][1]
-        x3[i] = x[i][2]
+        #x2[i] = x[i][1]
+        #x3[i] = x[i][2]
         x4[i] = x[i][3]
 
     min_x1, max_x1 = find_smallest_and_biggest_value(x1)
-    min_x2, max_x2 = find_smallest_and_biggest_value(x2)
-    min_x3, max_x3 = find_smallest_and_biggest_value(x3)
+    #min_x2, max_x2 = find_smallest_and_biggest_value(x2)
+    #min_x3, max_x3 = find_smallest_and_biggest_value(x3)
     min_x4, max_x4 = find_smallest_and_biggest_value(x4)
-    print("Min: ", min_x1, " Max: ", max_x1)
-    print("Min: ", min_x2, " Max: ", max_x2)
-    print("Min: ", min_x3, " Max: ", max_x3)
-    print("Min: ", min_x4, " Max: ", max_x4)
 
-main()
+    min_list = [min_x1, """min_x2,""""""" min_x3,""", min_x4]
+    max_list = [max_x1, """max_x2, max_x3""", max_x4]
+
+    return min_list, max_list
