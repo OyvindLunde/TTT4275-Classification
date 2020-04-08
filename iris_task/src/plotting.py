@@ -1,7 +1,7 @@
-import numpy as np
 #import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
-import extract_data as ed
+from iris_task.src import extract_data as ed
+
 
 def histogram(x, feature_number):
     min_list, max_list = ed.histogram_bounds()
