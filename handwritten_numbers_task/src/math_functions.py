@@ -1,6 +1,4 @@
-from handwritten_numbers_task.src import extract_data as ed
 import numpy as np
-import math
 import itertools
 import matplotlib.pyplot as plt
 
@@ -12,34 +10,17 @@ def find_distance(m1, m2):
     
     return dist
 
-train_set, train_labels, test_set, test_labels = ed.get_sets()
-
-reduced_train_set = train_set[0:1000]
-reduced_train_labels = train_labels[0:1000]
-
-predicts = np.zeros((10,1))
-
-min_dist = math.inf
-index = 0
-
-for i in range(len(predicts)):
-    for j in range(len(reduced_train_set)):
-        dist = find_distance(reduced_train_set[j], test_set[i])
-        if dist < min_dist:
-            index = j
-            min_dist = dist
-    predicts[i] = reduced_train_labels[index]
-    min_dist = math.inf
+def confusion_matrix(prediction, actual, numClasses):
+    confusionMatrix = np.zeros((numClasses,numClasses))
+    for i in range(len(prediction)):
+        confusionMatrix[int(actual[i])][int(prediction[i])] += 1
+    return confusionMatrix
 
 
 def plot_confusion_matrix(cm, classes,
                           normalize=False,
                           title='Confusion matrix',
                           cmap=plt.cm.Blues):
-    """
-    This function prints and plots the confusion matrix.
-    Normalization can be applied by setting `normalize=True`.
-    """
     plt.imshow(cm, interpolation='nearest', cmap=cmap)
     plt.title(title)
     plt.colorbar()
@@ -65,14 +46,3 @@ def plot_confusion_matrix(cm, classes,
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
     plt.show()
-
-
-def confusion_matrix(prediction, actual, numClasses):
-    confusionMatrix = np.zeros((numClasses,numClasses))
-    for i in range(len(prediction)):
-        confusionMatrix[int(actual[i])][int(prediction[i])] += 1
-    return confusionMatrix
-
-
-cm = confusion_matrix(predicts, test_labels[0:10], 10)
-plot_confusion_matrix(cm, ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"])
