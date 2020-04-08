@@ -22,7 +22,3 @@ def get_sets(): # Windows
     test_set = read_idx("C:/Users/Øyvind/TTT4275-Classification/handwritten_numbers_task/number_data/MNist_ttt4275/test_images.bin")
     test_labels = read_idx("C:/Users/Øyvind/TTT4275-Classification/handwritten_numbers_task/number_data/MNist_ttt4275/test_labels.bin")
     return train_set, train_labels, test_set, test_labels
-
-train_set, train_labels, test_set, test_labels = get_sets()
-print(train_set[10])
-print(train_labels)
