@@ -23,5 +23,5 @@ def main():
         predicts[i] = reduced_train_labels[index]
         min_dist = math.inf
 
-        cm = mf.confusion_matrix(predicts, test_labels[0:len(predicts)], 10)
-        mf.plot_confusion_matrix(cm, ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"])
+    cm = mf.confusion_matrix(predicts, test_labels[0:len(predicts)], 10)
+    mf.plot_confusion_matrix(cm, ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"])

@@ -30,35 +30,12 @@ def find_k_nearest_neighbours(test_matrix, test_set, k):
 
     return list[:,0]
 
-train_set, train_labels, test_set, test_labels = ed.get_sets()
+def predict_label(nearest_neighbours):
+    list = np.zeros(10,1)
+    for i in range(len(nearest_neighbours)):
+        list[nearest_neighbours[i]] += 1
+    return np.argmax(list)
 
-reduced_train_set = train_set[0:1000]
-reduced_train_labels = train_labels[0:1000]
-
-test = find_k_nearest_neighbours(reduced_train_set[11], reduced_train_set, 7)
-print(test)
-
-predicts = np.zeros((100,1))
-
-min_dist = math.inf
-index = 0
-
-"""
-for i in range(100):
-    for j in range(len(reduced_train_set)):
-        dist = find_distance(reduced_train_set[j], test_set[i])
-        if dist < min_dist:
-            index = j
-            min_dist = dist
-    predicts[i] = reduced_train_labels[index]
-    min_dist = math.inf
-
-
-for i in range(10):
-    print("predicted: ", predicts[i])
-    print("actual: ", test_labels[i])
-    print("________________________")
-"""
 def confusion_matrix(prediction, actual, numClasses):
     confusionMatrix = np.zeros((numClasses,numClasses))
     for i in range(len(prediction)):
@@ -95,3 +72,4 @@ def plot_confusion_matrix(cm, classes,
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
     plt.show()
+
