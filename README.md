@@ -1,4 +1,5 @@
-# TTT4275 Classification Project - Stian Mjelde Jakobsen and Øyvind Reppen Lunde
+# TTT4275 Classification Project
+## Stian Mjelde Jakobsen and Øyvind Reppen Lunde
 
 **The following repository contains our Classification project in the NTNU course TTT4275. The project is divided in two parts: Classifying different variants of the Iris flower using a linear classifier, and classifying handwritten numbers using a nearest neighbours classifier.**
 
