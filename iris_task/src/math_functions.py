@@ -1,5 +1,5 @@
 import numpy as np
-from iris_task.src import extract_data as ed, math_functions as mf, plotting as plt
+import extract_data as ed, math_functions as mf, plotting as plt
 
 
 def calculate_MSE(W, t, x):
