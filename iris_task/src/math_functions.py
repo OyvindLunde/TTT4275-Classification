@@ -53,7 +53,7 @@ def find_optimal_alpha():
     iterations = 10000
     x_train, x_test, y_train, y_test, t_train, t_test = ed.get_sets()
 
-    while error_rate > 0.05:
+    while error_rate > 0.05:    #Return alpha when error rate is small enough, or alpha is too small
         alpha = alpha*0.8
         W = calculate_W(iterations, alpha, t_train, x_train)
         pred_train = predict(x_train, W)
