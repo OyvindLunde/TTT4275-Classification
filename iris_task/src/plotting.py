@@ -14,9 +14,11 @@ def get_feature_vector(feature_number, class_number, predictions, dataset):
 
 
 def histogram(x, feature_number, class_number):
-    classes = ["Iris-setosa", "Iris-versicolor", "Iris-virginica"]
+    #If you have removed features, then remove them from the feature list
+    #and remove them from the histogram_bounds() function below
     feuatures = ["sepal length" ,"sepal width", "petal length" ,"petal width"]
-    min_list, max_list = ed.histogram_bounds()
+    classes = ["Iris-setosa", "Iris-versicolor", "Iris-virginica"]
+    min_list, max_list = histogram_bounds()
     num_bins = 10
     plt.hist(x, num_bins, range=[min_list[feature_number][0], max_list[feature_number][0]], facecolor='blue', alpha=0.5)
     plt.title("Class " + classes[class_number] + " with feature " + feuatures[feature_number])
@@ -26,6 +28,7 @@ def histogram(x, feature_number, class_number):
 
 
 def histogram_bounds():
+    #Comment out/delete the feature you want to remove
     x, y =ed. extract_data()
     x1 = np.zeros((len(x), 1))
     x2 = np.zeros((len(x), 1))
@@ -33,9 +36,9 @@ def histogram_bounds():
     x4 = np.zeros((len(x), 1))
     for i in range(len(x)):
         x1[i] = x[i][0]
-        x2[i] = x[i][0]
-        x3[i] = x[i][1]
-        x4[i] = x[i][2]
+        x2[i] = x[i][1]
+        x3[i] = x[i][2]
+        x4[i] = x[i][3]
 
     min_x1, max_x1 = mf.find_smallest_and_biggest_value(x1)
     min_x2, max_x2 = mf.find_smallest_and_biggest_value(x2)

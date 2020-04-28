@@ -8,7 +8,6 @@ def calculate_MSE(W, t, x):
     for i in range(len(g)):
         diff = np.subtract(g[i], t[i])
         sum += np.dot(diff,diff)
-
     return sum/2
 
 def calculate_g(W,x):
@@ -22,7 +21,6 @@ def calculate_MSE_gradient(W, t, x):
     mse_grad = g.T-t.T
     g_grad = g.T * (1-g.T) # Element wise
     W_grad = x
-
     return np.dot(W_grad, mse_grad*g_grad)
 
 
@@ -32,19 +30,19 @@ def calculate_W(iterations, alpha, t, x):
         W = W - alpha*calculate_MSE_gradient(W,t,x).T
     return W
 
-def predict(x, W, t):
+def predict(x, W):
     predictions = np.zeros((len(x[0]), 1))
     g = calculate_g(W, x)
     for i in range(len(g[0])):
         predictions[i] = np.argmax(g[:,i], axis=0)
     return predictions
 
-def find_total_errors(conf):
+def find_total_errors(conf_matrix):
     sum = 0
-    for i in range(len(conf)):
-        for j in range(len(conf[0])):
+    for i in range(len(conf_matrix)):
+        for j in range(len(conf_matrix[0])):
             if (i != j):
-                sum += conf[i][j]
+                sum += conf_matrix[i][j]
     return sum
 
 
@@ -52,12 +50,13 @@ def find_optimal_alpha():
     error_rate = 1
     alpha = 0.1
     best_alpha = 0.1
+    iterations = 10000
     x_train, x_test, y_train, y_test, t_train, t_test = ed.get_sets()
 
     while error_rate > 0.05:
         alpha = alpha*0.8
-        W = calculate_W(10000, alpha, t_train, x_train)
-        pred_train = predict(x_train, W, t_train)
+        W = calculate_W(iterations, alpha, t_train, x_train)
+        pred_train = predict(x_train, W)
         conf_matrix_train = plt.confusion_matrix(pred_train, y_train, 3)
         total_errors_train = mf.find_total_errors(conf_matrix_train)
         if total_errors_train/90 < error_rate:
@@ -68,10 +67,10 @@ def find_optimal_alpha():
     return best_alpha
 
 
-def find_smallest_and_biggest_value(x):
+def find_smallest_and_biggest_value(dataset):
     min = np.inf
     max = -np.inf
-    for i in x:
+    for i in dataset:
         if i < min:
             min = i
         if i > max:
