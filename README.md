@@ -5,16 +5,10 @@
 
 
 ## The Iris task
-The entire Iris task is programmed in Python. The code is only tested on Mac, and while it should work on other operating systems, you might encounter some file path problems on e.g. Windows.
-
-
-
+The entire Iris task is programmed in Python. The master branch is tested on Mac, while the 'windows' branch is tested on Windows, using VS Code. Run the program by running the 'Iris.py' file.
 
 
 ## The Handwritten numbers task
-The entire Handwritten numbers task is programmed in Matlab. 
-
-### Running the code
-To run the code you will need to load the 'data_all.mat' file, which can be found in the /handwritten_numbers_task/number_data/MNist_ttt4275/ folder. 
+The entire Handwritten numbers task is programmed in Matlab. To run the code you will need to load the 'data_all.mat' file, which can be found in the /handwritten_numbers_task/number_data/MNist_ttt4275/ folder. 
 
 To run the task2c.m files, you need to run 'clustering.m' first.
