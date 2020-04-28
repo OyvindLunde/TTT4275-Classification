@@ -1,4 +1,4 @@
-from iris_task.src import extract_data as ed, math_functions as mf, plotting as plt
+import extract_data as ed, math_functions as mf, plotting as plt
 
 
 
@@ -25,7 +25,7 @@ def main():
     plt.plot_confusion_matrix(conf_matrix_train, ["Iris-setosa", "Iris-versicolor", "Iris-virginica"])
     plt.plot_confusion_matrix(conf_matrix_test, ["Iris-setosa", "Iris-versicolor", "Iris-virginica"])
 
-    plt.plot_histogram(num_features, num_classes, pred_test, x_test)
+    #plt.plot_histogram(num_features, num_classes, pred_test, x_test)
 
 main()
 

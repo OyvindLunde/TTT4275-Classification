@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from iris_task.src import extract_data as ed, math_functions as mf
+import extract_data as ed, math_functions as mf
 import numpy as np
 import itertools
 

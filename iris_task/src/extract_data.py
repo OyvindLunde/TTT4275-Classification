@@ -1,14 +1,16 @@
 import pandas as pd
 import numpy as np
 from sklearn import preprocessing
+import pathlib
 
+path = pathlib.Path(__file__).with_name('iris.data')
 
 def extract_data():
     #If you are removing features, just comment out which features you want to remove
     #and remove them from the return statement
     #Also remember to remove them from histogram() in plotting.py, if you are plotting the histogram
 
-    data = pd.read_csv("../iris_data/iris.data", sep=",")
+    data = pd.read_csv(path, sep=",")
     le = preprocessing.LabelEncoder()
     x1 = list(data["sepal_length"])
     x2 = list(data["sepal_width"])
