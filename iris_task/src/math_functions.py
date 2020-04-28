@@ -1,5 +1,5 @@
 import numpy as np
-import math
+from iris_task.src import extract_data as ed, math_functions as mf, plotting as plt
 
 
 def calculate_MSE(W, t, x):
@@ -16,12 +16,6 @@ def calculate_g(W,x):
     g = 1/(1+np.exp(-z))
     return g
 
-def matrixMul(x,y):
-    z = np.zeros((len(x),len(y)))
-    for i in range(len(y)):
-        for j in range(len(x)):
-            z[j][i] = y[i]*x[j]
-    return z
 
 def calculate_MSE_gradient(W, t, x):
     g = calculate_g(W,x)
@@ -44,3 +38,42 @@ def predict(x, W, t):
     for i in range(len(g[0])):
         predictions[i] = np.argmax(g[:,i], axis=0)
     return predictions
+
+def find_total_errors(conf):
+    sum = 0
+    for i in range(len(conf)):
+        for j in range(len(conf[0])):
+            if (i != j):
+                sum += conf[i][j]
+    return sum
+
+
+def find_optimal_alpha():
+    error_rate = 1
+    alpha = 0.1
+    best_alpha = 0.1
+    x_train, x_test, y_train, y_test, t_train, t_test = ed.get_sets()
+
+    while error_rate > 0.05:
+        alpha = alpha*0.8
+        W = calculate_W(10000, alpha, t_train, x_train)
+        pred_train = predict(x_train, W, t_train)
+        conf_matrix_train = plt.confusion_matrix(pred_train, y_train, 3)
+        total_errors_train = mf.find_total_errors(conf_matrix_train)
+        if total_errors_train/90 < error_rate:
+            error_rate = total_errors_train / 90
+            best_alpha = alpha
+        if alpha < 0.0001:
+            return best_alpha
+    return best_alpha
+
+
+def find_smallest_and_biggest_value(x):
+    min = np.inf
+    max = -np.inf
+    for i in x:
+        if i < min:
+            min = i
+        if i > max:
+            max = i
+    return min, max

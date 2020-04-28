@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
-import sklearn
-from sklearn import preprocessing, linear_model
-from sklearn.linear_model import SGDClassifier
+from sklearn import preprocessing
 
 
 def extract_data():
@@ -13,22 +11,28 @@ def extract_data():
     x3 = list(data["petal_length"])
     x4 = list(data["petal_width"])
     y = list(le.fit_transform(list(data["class"])))
+    x5 = [1] * 150 #Start offset, simular to b in y = ax + b
 
-    return list(zip(x1,x4)), y
+    return list(zip(x1, x2, x3, x4, x5)), y
+
 
 
 def get_sets():
     x, y = extract_data()
-    clc1_x_train, clc1_x_test, clc1_y_train, clc1_y_test = sklearn.model_selection.train_test_split(x[0:50], y[0:50],
-                                                                                                    test_size=0.4, random_state=0)
-    clc2_x_train, clc2_x_test, clc2_y_train, clc2_y_test = sklearn.model_selection.train_test_split(x[50:100], y[50:100],
-                                                                                                    test_size=0.4, random_state=0)
-    clc3_x_train, clc3_x_test, clc3_y_train, clc3_y_test = sklearn.model_selection.train_test_split(x[100:150], y[100:150],
-                                                                                                    test_size=0.4, random_state=0)
-    x_train = clc1_x_train + clc2_x_train + clc3_x_train
-    x_test = clc1_x_test + clc2_x_test + clc3_x_test
-    y_train = clc1_y_train + clc2_y_train + clc3_y_train
-    y_test = clc1_y_test + clc2_y_test + clc3_y_test
+
+    #Get the 30 first for training and 20 last for test
+    x_train = x[0:30] + x[50:80] + x[100:130]
+    x_test = x[30:50] + x[80:100] + x[130:150]
+    y_train = y[0:30] + y[50:80] + y[100:130]
+    y_test = y[30:50] + y[80:100] + y[130:150]
+
+    #Get 30 last for training and 20 first for test
+    """
+    x_train = x[20:50] + x[70:100] + x[120:150]
+    x_test = x[0:20] + x[50:70] + x[100:120]
+    y_train = y[20:50] + y[70:100] + y[120:150]
+    y_test = y[0:20] + y[50:70] + y[100:120]
+    """
 
     t_train = np.zeros((3, len(y_train)))
     t_test = np.zeros((3, len(y_test)))
@@ -62,41 +66,5 @@ def reshape_data(x_train, x_test, y_train, y_test):
     return x_train_new, x_test_new, y_train_new, y_test_new
 
 
-def confusion_matrix(prediction, actual, numClasses):
-    confusionMatrix = np.zeros((numClasses,numClasses))
-    for i in range(len(prediction)):
-        confusionMatrix[int(actual[i])][int(prediction[i])] += 1
-    return confusionMatrix
 
 
-def find_smallest_and_biggest_value(x):
-    min = np.inf
-    max = -np.inf
-    for i in x:
-        if i < min:
-            min = i
-        if i > max:
-            max = i
-    return min, max
-
-def histogram_bounds():
-    x, y = extract_data()
-    x1 = np.zeros((len(x), 1))
-    x2 = np.zeros((len(x), 1))
-    x3 = np.zeros((len(x), 1))
-    x4 = np.zeros((len(x), 1))
-    for i in range(len(x)):
-        x1[i] = x[i][0]
-        #x2[i] = x[i][1]
-        #x3[i] = x[i][2]
-        x4[i] = x[i][3]
-
-    min_x1, max_x1 = find_smallest_and_biggest_value(x1)
-    #min_x2, max_x2 = find_smallest_and_biggest_value(x2)
-    #min_x3, max_x3 = find_smallest_and_biggest_value(x3)
-    min_x4, max_x4 = find_smallest_and_biggest_value(x4)
-
-    min_list = [min_x1, """min_x2,""""""" min_x3,""", min_x4]
-    max_list = [max_x1, """max_x2, max_x3""", max_x4]
-
-    return min_list, max_list
